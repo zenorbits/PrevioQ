@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
   return (
@@ -17,16 +18,16 @@ const LandingPage = () => {
       </h1>
 
       <p className="text-gray-300 text-base sm:text-lg lg:text-xl mb-4 z-10 text-center max-w-md sm:max-w-xl">
-        Find all the PYQs and resources related to your studies in one place.
+        Find all the PYQs and resources all in one place.
       </p>
 
       <p className="text-xs sm:text-sm text-green-400 mb-8 z-10">
         🚀 No login required
       </p>
-
-      <button className="px-6 sm:px-8 py-2 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:scale-105 transform transition z-10 text-sm sm:text-base">
+        
+      <Link to='user' className="px-6 sm:px-8 py-2 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:scale-105 transform transition z-10 text-sm sm:text-base">
         Get Started
-      </button>
+      </Link>
     </div>
   )
 }

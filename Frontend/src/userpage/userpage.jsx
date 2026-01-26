@@ -1,12 +1,14 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
+import MainBody from '../components/MainBody'
 
-const userpage = () => {
-  return (
-    <div>
-        <Navbar/>
-    </div>
-  )
+const Userpage = () => {
+    return (
+        <div>
+            <Navbar />
+            <MainBody />
+        </div>
+    )
 }
 
-export default userpage
+export default Userpage
