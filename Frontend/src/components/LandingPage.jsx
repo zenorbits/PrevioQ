@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const LandingPage = () => {
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 font-mono overflow-hidden px-4">
-      
+
       {/* Glassmorphism background overlay */}
       <div className="absolute inset-0 bg-white/5 backdrop-blur-lg"></div>
 
@@ -24,7 +24,7 @@ const LandingPage = () => {
       <p className="text-xs sm:text-sm text-green-400 mb-8 z-10">
         🚀 No login required
       </p>
-        
+
       <Link to='user' className="px-6 sm:px-8 py-2 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:scale-105 transform transition z-10 text-sm sm:text-base">
         Get Started
       </Link>
