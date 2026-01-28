@@ -25,7 +25,7 @@ const LandingPage = () => {
         🚀 No login required
       </p>
 
-      <Link to='user' className="px-6 sm:px-8 py-2 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:scale-105 transform transition z-10 text-sm sm:text-base">
+      <Link to='/user' className="px-6 sm:px-8 py-2 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:scale-105 transform transition z-10 text-sm sm:text-base">
         Get Started
       </Link>
     </div>
