@@ -8,6 +8,7 @@ const UploadForm = () => {
   const [uploader, setUploader] = useState("")
   const [tags, setTags] = useState("")
   const [file, setFile] = useState(null)
+  const [customName, setCustomName] = useState("")   // 👈 new state for custom filename
   const [uploadFile, { isLoading }] = useUploadFileMutation()
 
   const fileInputRef = useRef(null)
@@ -34,6 +35,7 @@ const UploadForm = () => {
     formData.append('file', file)
     formData.append('uploader', finalUploader)
     formData.append('tags', tags)
+    formData.append('customName', customName) // 👈 send custom name to backend
 
     try {
       await uploadFile(formData).unwrap()
@@ -43,9 +45,7 @@ const UploadForm = () => {
       setUploader("")
       setTags("")
       setFile(null)
-
-      // Navigate back after short delay
-      setTimeout(() => navigate('/user'), 1500)
+      setCustomName("")
     } catch (err) {
       console.error("Upload failed:", err)
       toast.error("Upload failed. Please try again.")
@@ -56,6 +56,7 @@ const UploadForm = () => {
     setUploader("")
     setTags("")
     setFile(null)
+    setCustomName("")
     toast.info("Upload cancelled.")
     setTimeout(() => navigate('/user'), 1000)
   }
@@ -87,16 +88,39 @@ const UploadForm = () => {
             />
           </div>
 
-          {/* File */}
+          {/* Custom File Name */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">Custom File Name</label>
+            <input
+              type="text"
+              value={customName}
+              onChange={(e) => setCustomName(e.target.value)}
+              placeholder="Optional custom name"
+              className="w-full px-3 py-2 rounded-lg bg-white/10 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          {/* File Upload */}
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">Select File</label>
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              className="w-full text-gray-200"
-            />
-            {file && <p className="text-sm text-gray-400 mt-1">Selected: {file.name}</p>}
+            <div className="flex items-center space-x-3">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                className="hidden"
+                id="fileUpload"
+              />
+              <label
+                htmlFor="fileUpload"
+                className="cursor-pointer px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg shadow hover:scale-105 transform transition"
+              >
+                Choose File
+              </label>
+              {file && (
+                <p className="text-sm text-gray-400">Selected: {file.name}</p>
+              )}
+            </div>
           </div>
 
           {/* Tags */}

@@ -30,13 +30,15 @@ const uploadFile = async (req, res) => {
 
     // ✅ Clean up local temp file
     fs.unlinkSync(req.file.path);
+    const customName = req.body.customName && req.body.customName.trim() !== ""
+      ? req.body.customName.trim()
+      : req.file.originalname;
 
-    // ✅ Save metadata in MongoDB
     const newFile = new fileModel({
-      filename: req.file.originalname,       // original filename
-      url: result.secure_url,                // Cloudinary URL
-      public_id: result.public_id,           // Cloudinary public ID
-      uploader: req.body.uploader || "Anon", // uploader from request body
+      filename: customName,                     // 👈 use custom name if provided
+      url: result.secure_url,                   // Cloudinary URL
+      public_id: result.public_id,              // Cloudinary public ID
+      uploader: req.body.uploader || "Anon",    // uploader from request body
       tags: req.body.tags ? req.body.tags.split(',') : []
     });
 
