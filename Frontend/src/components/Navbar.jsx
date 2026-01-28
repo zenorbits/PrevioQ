@@ -1,20 +1,8 @@
 import React, { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const fileInputRef = useRef(null)
-
-  const handleFileButtonClick = () => {
-    fileInputRef.current.click() // trigger hidden input
-  }
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      console.log("Selected file:", file.name)
-      // Later: upload to Firebase / backend here
-    }
-  }
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/10 backdrop-blur-md border-b border-white/20 z-50">
@@ -38,20 +26,15 @@ const Navbar = () => {
           {/* Desktop Options */}
           <div className="hidden md:flex items-center space-x-4">
             {/* Hidden file input */}
-            <input
-              type="file"
-              className="hidden"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-            />
 
             {/* Upload button triggers file input */}
+            <Link to ='/upload'>
             <button
-              onClick={handleFileButtonClick}
               className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow hover:scale-105 transform transition"
             >
               Upload Resources
             </button>
+            </Link>
 
             <button className="px-4 py-2 text-gray-200 hover:text-white transition">Community</button>
             <button className="px-4 py-2 text-gray-200 hover:text-white transition">About</button>
@@ -83,12 +66,13 @@ const Navbar = () => {
       {menuOpen && (
         <div className="md:hidden px-4 pb-4 space-y-2">
           {/* Upload button also triggers file input */}
+          <Link to='/upload'>
           <button
-            onClick={handleFileButtonClick}
             className="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow hover:scale-105 transform transition"
           >
             Upload Resources
           </button>
+          </Link>
           <button className="w-full px-4 py-2 text-gray-200 hover:text-white transition">Community</button>
           <button className="w-full px-4 py-2 text-gray-200 hover:text-white transition">About</button>
           <button className="w-full px-4 py-2 text-gray-200 hover:text-white transition">Contact</button>
