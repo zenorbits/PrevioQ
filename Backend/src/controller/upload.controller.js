@@ -1,24 +1,55 @@
+const cloudinary = require('cloudinary').v2;
+const fs = require('fs');
+const dotenv = require('dotenv');
 const fileModel = require('../models/file.model'); // import your schema
 
+dotenv.config();
+
+// ✅ Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+
 const uploadFile = async (req, res) => {
-    try {
-        const newFile = new fileModel({
-            filename: req.file.originalname,       // original filename
-            url: req.file.path,                    // Cloudinary URL
-            uploader: req.body.uploader || "Anon", // uploader from request body
-            tags: req.body.tags ? req.body.tags.split(',') : []
-        });
+  try {
+    console.log("req.file:", req.file);
 
-        await newFile.save();
-
-        res.json({
-            message: "File uploaded successfully",
-            file: newFile
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Upload failed" });
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
     }
+
+    console.log("req.body:", req.body);
+
+    // ✅ Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'uploads',
+      resource_type: 'auto',
+    });
+
+    // ✅ Clean up local temp file
+    fs.unlinkSync(req.file.path);
+
+    // ✅ Save metadata in MongoDB
+    const newFile = new fileModel({
+      filename: req.file.originalname,       // original filename
+      url: result.secure_url,                // Cloudinary URL
+      public_id: result.public_id,           // Cloudinary public ID
+      uploader: req.body.uploader || "Anon", // uploader from request body
+      tags: req.body.tags ? req.body.tags.split(',') : []
+    });
+
+    await newFile.save();
+
+    res.json({
+      message: "File uploaded successfully",
+      file: newFile
+    });
+  } catch (err) {
+    console.error(err); // logs full error to console
+    res.status(500).json({ error: err.message || "Upload failed" });
+  }
 };
 
 module.exports = uploadFile;
