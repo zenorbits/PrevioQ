@@ -10,8 +10,14 @@ export const fileApi = createApi({
                 method: 'POST',
                 body: formData
             })
+        }),
+        fetchFile: build.query({
+            query: ({ page = 1, limit = 10 }) => ({
+                url: `/fetchFile?page=${page}&limit=${limit}`,
+                method: 'GET'
+            })
         })
     })
 });
 
-export const { useUploadFileMutation } = fileApi
+export const { useUploadFileMutation,useFetchFileQuery } = fileApi

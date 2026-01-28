@@ -1,11 +1,10 @@
 // app.js
 const express = require('express');
 const app = express();
-const multer = require('multer');
-const cloudinary = require('cloudinary').v2;
 const dotenv = require('dotenv');
 const cors = require('cors');
 const uploadFileRouter = require('../src/routes/upload.routes');
+const fetchFileRouter = require('./routes/fetchfile.routes');
 
 dotenv.config();
 
@@ -13,7 +12,7 @@ dotenv.config();
 const allowedOrigins = [
   "http://localhost:5173",              // local dev (Vite)
   "https://previoq-frontend.vercel.app" // your Vercel deployment
-  // add "https://yourcustomdomain.com" if you mapped a custom domain
+ 
 ];
 
 app.use(cors({
@@ -39,5 +38,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api', uploadFileRouter);
+app.use('/api',fetchFileRouter)
 
 module.exports = { app };
