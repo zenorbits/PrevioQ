@@ -1,13 +1,17 @@
 import React, { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useUploadFileMutation } from '../redux/api/fileApi'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const UploadForm = () => {
   const [uploader, setUploader] = useState("")
   const [tags, setTags] = useState("")
   const [file, setFile] = useState(null)
+  const [uploadFile, { isLoading }] = useUploadFileMutation()
 
   const fileInputRef = useRef(null)
-  const navigate = useNavigate()   // hook for navigation
+  const navigate = useNavigate()
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0]
@@ -17,35 +21,47 @@ const UploadForm = () => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const finalUploader = uploader.trim() === "" ? "Anonymous" : uploader.trim()
 
-    console.log("Uploader:", finalUploader)
-    console.log("Tags:", tags)
-    console.log("File:", file ? file.name : "No file selected")
+    if (!file) {
+      toast.error("No file selected. Please choose a file before submitting.")
+      return
+    }
 
-    // Reset after submit
-    setUploader("")
-    setTags("")
-    setFile(null)
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('uploader', finalUploader)
+    formData.append('tags', tags)
 
-    // Navigate back to /user
-    navigate('/user')
+    try {
+      await uploadFile(formData).unwrap()
+      toast.success("File uploaded successfully!")
+
+      // Reset form
+      setUploader("")
+      setTags("")
+      setFile(null)
+
+      // Navigate back after short delay
+      setTimeout(() => navigate('/user'), 1500)
+    } catch (err) {
+      console.error("Upload failed:", err)
+      toast.error("Upload failed. Please try again.")
+    }
   }
 
   const handleCancel = () => {
     setUploader("")
     setTags("")
     setFile(null)
-
-    // Navigate back to /user
-    navigate('/user')
+    toast.info("Upload cancelled.")
+    setTimeout(() => navigate('/user'), 1000)
   }
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 font-mono overflow-hidden px-4">
-      
       {/* Glassmorphism background overlay */}
       <div className="absolute inset-0 bg-white/5 backdrop-blur-lg"></div>
 
@@ -99,6 +115,7 @@ const UploadForm = () => {
           <div className="flex justify-end space-x-3 pt-2">
             <button
               type="button"
+              disabled={isLoading}
               onClick={handleCancel}
               className="px-4 py-2 bg-gray-600 text-gray-200 rounded-lg hover:bg-gray-500 transition"
             >
@@ -106,15 +123,19 @@ const UploadForm = () => {
             </button>
             <button
               type="submit"
+              disabled={isLoading}
               className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow-lg hover:scale-105 transform transition"
             >
-              Submit
+              {isLoading ? 'Loading...' : 'Submit'}
             </button>
           </div>
         </form>
       </div>
+
+      {/* Toast container */}
+      <ToastContainer position="top-right" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick />
     </div>
   )
 }
 
-export default UploadForm   
+export default UploadForm
