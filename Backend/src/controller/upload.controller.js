@@ -1,4 +1,14 @@
 const path = require("path");
+const fs = require("fs");
+const cloudinary = require("cloudinary").v2;
+const fileModel = require("../models/file.model");
+
+// Cloudinary config (make sure you’ve already set process.env vars)
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 const uploadFile = async (req, res) => {
   try {
@@ -20,6 +30,7 @@ const uploadFile = async (req, res) => {
       resource_type: resourceType,
     });
 
+    // Clean up temp file
     fs.unlinkSync(req.file.path);
 
     const customName =
@@ -46,3 +57,5 @@ const uploadFile = async (req, res) => {
     res.status(500).json({ error: err.message || "Upload failed" });
   }
 };
+
+module.exports = uploadFile;
