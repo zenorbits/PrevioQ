@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/Navbar'
+import { useFetchFileQuery } from '../redux/api/fileApi';
 
 const MainBody = () => {
     // Hardcoded file data for now
@@ -26,6 +27,14 @@ const MainBody = () => {
             preview: "https://example.com/chemistry_resources_preview"
         }
     ];
+
+    const {data, isLoading, isError} = useFetchFileQuery();
+
+    const file = data;
+
+    useEffect(()=>{
+        console.log(file);  
+    })
 
     return (
         <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 font-mono overflow-hidden pt-10 lg:pt-4 pb-16">

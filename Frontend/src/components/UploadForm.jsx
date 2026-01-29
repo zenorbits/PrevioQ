@@ -48,7 +48,7 @@ const UploadForm = () => {
       setCustomName("")
     } catch (err) {
       console.error("Upload failed:", err)
-      toast.error("Upload failed. Please try again.")
+      toast.error("Upload failed. Please try again.",err)
     }
   }
 
