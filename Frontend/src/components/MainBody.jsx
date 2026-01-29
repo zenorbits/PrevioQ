@@ -2,9 +2,33 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 
 const MainBody = () => {
+    // Hardcoded file data for now
+    const files = [
+        {
+            id: 1,
+            filename: "Maths_PYQ.pdf",
+            uploader: "Sanchit",
+            url: "https://example.com/maths_pyq.pdf",
+            preview: "https://example.com/maths_pyq_preview"
+        },
+        {
+            id: 2,
+            filename: "Physics_Notes.docx",
+            uploader: "Ananya",
+            url: "https://example.com/physics_notes.docx",
+            preview: "https://example.com/physics_notes_preview"
+        },
+        {
+            id: 3,
+            filename: "Chemistry_Resources.zip",
+            uploader: "Rahul",
+            url: "https://example.com/chemistry_resources.zip",
+            preview: "https://example.com/chemistry_resources_preview"
+        }
+    ];
+
     return (
         <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 font-mono overflow-hidden pt-10 lg:pt-4">
-
             {/* Glassmorphism background overlay */}
             <div className="absolute inset-0 bg-white/5 "></div>
 
@@ -13,6 +37,7 @@ const MainBody = () => {
             <div className="absolute bottom-0 right-0 w-48 h-48 sm:w-64 sm:h-64 lg:w-96 lg:h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
 
             {/* Navbar */}
+
 
             {/* Page Content */}
             <div className="relative z-10 flex flex-col items-center justify-center pt-28 sm:pt-32 lg:pt-40 px-4 text-center">
@@ -24,7 +49,7 @@ const MainBody = () => {
                 </p>
 
                 {/* Resource Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl px-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl px-4 mb-12">
                     <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 text-gray-200 hover:scale-105 transform transition">
                         <h2 className="text-xl font-bold mb-2">PYQs</h2>
                         <p className="text-sm">Find previous year questions for your exams.</p>
@@ -36,6 +61,45 @@ const MainBody = () => {
                     <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 text-gray-200 hover:scale-105 transform transition">
                         <h2 className="text-xl font-bold mb-2">Resources</h2>
                         <p className="text-sm">Upload and explore helpful study materials.</p>
+                    </div>
+                </div>
+
+                {/* File List */}
+                {/* File List */}
+                <div className="w-full max-w-4xl px-4">
+                    <h2 className="text-2xl font-bold text-white mb-6">Uploaded Files</h2>
+                    <div className="space-y-4">
+                        {files.map((file) => (
+                            <div
+                                key={file.id}
+                                className="flex items-center justify-between bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-4 hover:scale-[1.02] transform transition"
+                            >
+                                {/* Left side: filename + uploader */}
+                                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                                    <h3 className="text-lg font-semibold text-blue-300">{file.filename}</h3>
+                                    <span className="text-sm text-gray-400">by {file.uploader}</span>
+                                </div>
+
+                                {/* Right side: actions */}
+                                <div className="flex space-x-3">
+                                    <a
+                                        href={file.url}
+                                        download
+                                        className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition"
+                                    >
+                                        Download
+                                    </a>
+                                    <a
+                                        href={file.preview}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                                    >
+                                        Preview
+                                    </a>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

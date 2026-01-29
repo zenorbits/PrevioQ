@@ -11,7 +11,7 @@ dotenv.config();
 // ✅ CORS setup
 const allowedOrigins = [
   "http://localhost:5173",              // local dev (Vite)
-  "https://previoq-frontend.vercel.app" // your Vercel deployment
+  "https://previo-q.vercel.app" // your Vercel deployment
  
 ];
 
