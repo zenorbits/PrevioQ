@@ -1,9 +1,8 @@
-const path = require("path");
 const fs = require("fs");
 const cloudinary = require("cloudinary").v2;
 const fileModel = require("../models/file.model");
 
-// Cloudinary config (make sure you’ve already set process.env vars)
+// Cloudinary config
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
@@ -21,18 +20,21 @@ const uploadFile = async (req, res) => {
 
     if (mimetype.startsWith("image/")) {
       resourceType = "image";
-    } else if (mimetype === "application/pdf") {
-      resourceType = "raw"; // PDFs go to raw
     } else if (mimetype.startsWith("video/")) {
       resourceType = "video";
+    } else if (mimetype === "application/pdf") {
+      resourceType = "raw"; // PDFs stay raw
     }
 
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: "uploads",
       resource_type: resourceType,
       format: mimetype === "application/pdf" ? "pdf" : undefined, // force PDF format
+      use_filename: true,     // keep original filename
+      unique_filename: false, // don’t randomize
     });
 
+    // Clean up temp file
     fs.unlinkSync(req.file.path);
 
     const customName =
