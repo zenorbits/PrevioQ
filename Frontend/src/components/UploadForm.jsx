@@ -48,7 +48,7 @@ const UploadForm = () => {
       setCustomName("")
     } catch (err) {
       console.error("Upload failed:", err)
-      toast.error("Upload failed. Please try again.",err)
+      toast.error("Upload failed. Please try again.", err)
     }
   }
 
@@ -102,7 +102,7 @@ const UploadForm = () => {
 
           {/* File Upload */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Select File</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1">Select File (Maximum 10MB)</label>
             <div className="flex items-center space-x-3">
               <input
                 type="file"

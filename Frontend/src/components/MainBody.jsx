@@ -28,12 +28,12 @@ const MainBody = () => {
         }
     ];
 
-    const {data, isLoading, isError} = useFetchFileQuery();
+    const { data, isLoading, isError } = useFetchFileQuery();
 
     const file = data;
 
-    useEffect(()=>{
-        console.log(file);  
+    useEffect(() => {
+        console.log(file);
     })
 
     return (
