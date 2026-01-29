@@ -21,6 +21,8 @@ const uploadFile = async (req, res) => {
 
     if (mimetype.startsWith("image/")) {
       resourceType = "image";
+    } else if (mimetype === "application/pdf") {
+      resourceType = "raw"; // PDFs go to raw
     } else if (mimetype.startsWith("video/")) {
       resourceType = "video";
     }
@@ -28,15 +30,13 @@ const uploadFile = async (req, res) => {
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: "uploads",
       resource_type: resourceType,
+      format: mimetype === "application/pdf" ? "pdf" : undefined, // force PDF format
     });
 
-    // Clean up temp file
     fs.unlinkSync(req.file.path);
 
     const customName =
-      req.body.customName && req.body.customName.trim() !== ""
-        ? req.body.customName.trim()
-        : req.file.originalname;
+      req.body.customName?.trim() !== "" ? req.body.customName.trim() : req.file.originalname;
 
     const newFile = new fileModel({
       filename: customName,
@@ -48,10 +48,7 @@ const uploadFile = async (req, res) => {
 
     await newFile.save();
 
-    res.json({
-      message: "File uploaded successfully",
-      file: newFile,
-    });
+    res.json({ message: "File uploaded successfully", file: newFile });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message || "Upload failed" });
