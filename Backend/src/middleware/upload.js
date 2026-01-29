@@ -20,7 +20,7 @@ const uploadToCloudinary = async (filePath) => {
   try {
     const result = await cloudinary.uploader.upload(filePath, {
       folder: 'uploads',
-      resource_type: 'auto',
+      resource_type: 'raw',
     });
 
     // Clean up local temp file after upload

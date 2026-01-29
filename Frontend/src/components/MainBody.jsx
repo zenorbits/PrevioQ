@@ -3,37 +3,13 @@ import Navbar from '../components/Navbar'
 import { useFetchFileQuery } from '../redux/api/fileApi';
 
 const MainBody = () => {
-    // Hardcoded file data for now
-    const files = [
-        {
-            id: 1,
-            filename: "Maths_PYQ.pdf",
-            uploader: "Sanchit",
-            url: "https://example.com/maths_pyq.pdf",
-            preview: "https://example.com/maths_pyq_preview"
-        },
-        {
-            id: 2,
-            filename: "Physics_Notes.docx",
-            uploader: "Ananya",
-            url: "https://example.com/physics_notes.docx",
-            preview: "https://example.com/physics_notes_preview"
-        },
-        {
-            id: 3,
-            filename: "Chemistry_Resources.zip",
-            uploader: "Rahul",
-            url: "https://example.com/chemistry_resources.zip",
-            preview: "https://example.com/chemistry_resources_preview"
-        }
-    ];
 
-    const { data, isLoading, isError } = useFetchFileQuery();
+    const { data, isLoading, isError } = useFetchFileQuery({ page: 1, limit: 20 });
 
-    const file = data;
+    const files = data?.files || [];
 
     useEffect(() => {
-        console.log(file);
+        console.log(files);
     })
 
     return (
@@ -79,12 +55,16 @@ const MainBody = () => {
                         📂 Uploaded Files
                     </h2>
 
+                    {isLoading && <p className="text-gray-400">Loading files...</p>}
+                    {isError && <p className="text-red-400">Failed to load files.</p>}
+
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {files.map((file) => {
                             const extension = file.filename.split('.').pop().toUpperCase();
                             return (
                                 <div
-                                    key={file.id}
+                                    key={file._id}
                                     className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 flex flex-col justify-between shadow-lg"
                                 >
                                     {/* File Icon + Name */}
