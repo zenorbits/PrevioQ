@@ -25,7 +25,7 @@ const uploadFile = async (req, res) => {
     // ✅ Upload to Cloudinary
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: 'uploads',
-      resource_type: 'auto',
+      resource_type: 'raw',
     });
 
     // ✅ Clean up local temp file
@@ -38,7 +38,7 @@ const uploadFile = async (req, res) => {
       filename: customName,                     // 👈 use custom name if provided
       url: result.secure_url,                   // Cloudinary URL
       public_id: result.public_id,              // Cloudinary public ID
-      uploader: req.body.uploader || "Anon",    // uploader from request body
+      uploader: req.body.uploader || "Anonymous",    // uploader from request body
       tags: req.body.tags ? req.body.tags.split(',') : []
     });
 

@@ -4,7 +4,7 @@ import { useFetchFileQuery } from '../redux/api/fileApi';
 
 const MainBody = () => {
 
-    const { data, isLoading, isError } = useFetchFileQuery({ page: 1, limit: 20 });
+    const { data, isLoading, isError,refetch } = useFetchFileQuery({ page: 1, limit: 20 });
 
     const files = data?.files || [];
 
