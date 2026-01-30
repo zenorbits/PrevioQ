@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const uploadFileRouter = require('../src/routes/upload.routes');
 const fetchFileRouter = require('./routes/fetchfile.routes');
+const downloadFileRoute = require('./routes/download.routes');
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ dotenv.config();
 const allowedOrigins = [
   "http://localhost:5173",              // local dev (Vite)
   "https://previo-q.vercel.app" // your Vercel deployment
- 
+
 ];
 
 app.use(cors({
@@ -38,6 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api', uploadFileRouter);
-app.use('/api',fetchFileRouter)
+app.use('/api', fetchFileRouter);
+app.use('/api', downloadFileRoute);
 
 module.exports = { app };
