@@ -28,7 +28,7 @@ const uploadFile = async (req, res) => {
 
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: "uploads",
-      resource_type: resourceType,
+      resource_type: 'image',
       format: mimetype === "application/pdf" ? "pdf" : undefined, // force PDF format
       use_filename: true,     // keep original filename
       unique_filename: false, // don’t randomize
