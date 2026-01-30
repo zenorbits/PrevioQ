@@ -19,8 +19,6 @@ const MainBody = () => {
       <div className="absolute -top-20 -left-20 w-32 h-32 sm:w-48 sm:h-48 lg:w-72 lg:h-72 bg-purple-600/30 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-48 h-48 sm:w-64 sm:h-64 lg:w-96 lg:h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
 
-      {/* Navbar */}
-      <Navbar />
 
       {/* Page Content */}
       <div className="relative z-10 flex flex-col items-center justify-center pt-28 sm:pt-32 lg:pt-40 px-4 text-center">
@@ -94,7 +92,7 @@ const MainBody = () => {
                   <div className="mb-4">
                     {extension === "PDF" ? (
                       <iframe
-                        src={file.url}
+                        src={`https://previoq-backend.onrender.com/api/files/${file._id}`} // ✅ proxy route
                         width="100%"
                         height="200px"
                         className="rounded-lg border border-gray-700"
@@ -121,7 +119,9 @@ const MainBody = () => {
                       ⬇ Download
                     </a>
                     <a
-                      href={file.url}
+                      href={extension === "PDF"
+                        ? `https://previoq-backend.onrender.com/api/files/${file._id}`
+                        : file.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition text-center"

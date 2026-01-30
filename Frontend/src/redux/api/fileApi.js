@@ -13,11 +13,17 @@ export const fileApi = createApi({
         }),
         fetchFile: build.query({
             query: ({ page = 1, limit = 10 }) => ({
-                url: `/fetchFile?page=${page}&limit=${limit}`,
+                url: `/fetchfile?page=${page}&limit=${limit}`,
                 method: 'GET'
+            })
+        }),
+        fetchSingleFile:build.query({
+            query:(id)=>({
+                url:`/files/${id}`,
+                method:'GET'
             })
         })
     })
 });
 
-export const { useUploadFileMutation,useFetchFileQuery } = fileApi
+export const { useUploadFileMutation,useFetchFileQuery,useFetchSingleFileQuery } = fileApi
