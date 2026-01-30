@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 const MainBody = () => {
   const [page, setPage] = useState(1);   // track current page
-  const limit = 20;
+  const limit = 18;
 
   const { data, isLoading, isError, refetch } = useFetchFileQuery({ page, limit });
   const files = data?.files || [];
