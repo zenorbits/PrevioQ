@@ -41,7 +41,8 @@ const Navbar = () => {
                 Upload Resources
               </button>
             </Link>
-            <button className="px-4 py-2 text-gray-200 hover:text-white transition">About</button>
+            <button className="px-4 py-2 text-gray-200 hover:text-white transition">Community </button>
+            <Link to='/about' className="px-4 py-2 text-gray-200 hover:text-white transition">About</Link>
             <button className="px-4 py-2 text-gray-200 hover:text-white transition">Contact</button>
           </div>
 
@@ -76,6 +77,7 @@ const Navbar = () => {
               Upload Resources
             </button>
           </Link>
+          <button className="w-full px-4 py-2 text-gray-200 hover:text-white transition">Community</button>
           <button className="w-full px-4 py-2 text-gray-200 hover:text-white transition">About</button>
           <button className="w-full px-4 py-2 text-gray-200 hover:text-white transition">Contact</button>
         </div>
