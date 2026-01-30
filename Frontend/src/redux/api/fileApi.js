@@ -17,13 +17,19 @@ export const fileApi = createApi({
                 method: 'GET'
             })
         }),
-        fetchSingleFile:build.query({
-            query:(id)=>({
-                url:`/files/${id}`,
-                method:'GET'
+        fetchSingleFile: build.query({
+            query: (id) => ({
+                url: `/files/${id}`,
+                method: 'GET'
+            })
+        }),
+        downloadFile: build.query({
+            query: (id) => ({
+                url: `/download/${id}`,
+                method: 'GET'
             })
         })
     })
 });
 
-export const { useUploadFileMutation,useFetchFileQuery,useFetchSingleFileQuery } = fileApi
+export const { useUploadFileMutation, useFetchFileQuery, useFetchSingleFileQuery } = fileApi

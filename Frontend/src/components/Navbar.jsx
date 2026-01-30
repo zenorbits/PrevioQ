@@ -28,15 +28,13 @@ const Navbar = () => {
             {/* Hidden file input */}
 
             {/* Upload button triggers file input */}
-            <Link to ='/upload'>
-            <button
-              className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow hover:scale-105 transform transition"
-            >
-              Upload Resources
-            </button>
+            <Link to='/upload'>
+              <button
+                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow hover:scale-105 transform transition"
+              >
+                Upload Resources
+              </button>
             </Link>
-
-            <button className="px-4 py-2 text-gray-200 hover:text-white transition">Community</button>
             <button className="px-4 py-2 text-gray-200 hover:text-white transition">About</button>
             <button className="px-4 py-2 text-gray-200 hover:text-white transition">Contact</button>
           </div>
@@ -67,13 +65,12 @@ const Navbar = () => {
         <div className="md:hidden px-4 pb-4 space-y-2">
           {/* Upload button also triggers file input */}
           <Link to='/upload'>
-          <button
-            className="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow hover:scale-105 transform transition"
-          >
-            Upload Resources
-          </button>
+            <button
+              className="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow hover:scale-105 transform transition"
+            >
+              Upload Resources
+            </button>
           </Link>
-          <button className="w-full px-4 py-2 text-gray-200 hover:text-white transition">Community</button>
           <button className="w-full px-4 py-2 text-gray-200 hover:text-white transition">About</button>
           <button className="w-full px-4 py-2 text-gray-200 hover:text-white transition">Contact</button>
         </div>

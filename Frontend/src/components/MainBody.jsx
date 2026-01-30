@@ -19,7 +19,6 @@ const MainBody = () => {
       <div className="absolute -top-20 -left-20 w-32 h-32 sm:w-48 sm:h-48 lg:w-72 lg:h-72 bg-purple-600/30 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-48 h-48 sm:w-64 sm:h-64 lg:w-96 lg:h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
 
-
       {/* Page Content */}
       <div className="relative z-10 flex flex-col items-center justify-center pt-28 sm:pt-32 lg:pt-40 px-4 text-center">
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-6">
@@ -56,8 +55,6 @@ const MainBody = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {files.map((file) => {
-              const extension = file.filename.split('.').pop().toUpperCase();
-
               return (
                 <div
                   key={file._id}
@@ -65,8 +62,8 @@ const MainBody = () => {
                 >
                   {/* File Icon + Name */}
                   <div className="flex items-start space-x-4 mb-4">
-                    <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold text-sm sm:text-base">
-                      {extension}
+                    <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold text-2xl">
+                      📁 {/* Generic file icon */}
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="text-lg font-semibold text-blue-300 break-words whitespace-normal">
@@ -90,7 +87,7 @@ const MainBody = () => {
 
                   {/* Preview Section */}
                   <div className="mb-4">
-                    {extension === "PDF" ? (
+                    {file.filename.toUpperCase().endsWith("PDF") ? (
                       <iframe
                         src={`https://previoq-backend.onrender.com/api/files/${file._id}`} // ✅ proxy route
                         width="100%"
@@ -98,7 +95,9 @@ const MainBody = () => {
                         className="rounded-lg border border-gray-700"
                         title={file.filename}
                       ></iframe>
-                    ) : extension === "PNG" || extension === "JPG" || extension === "JPEG" ? (
+                    ) : file.filename.toUpperCase().endsWith("PNG") ||
+                      file.filename.toUpperCase().endsWith("JPG") ||
+                      file.filename.toUpperCase().endsWith("JPEG") ? (
                       <img
                         src={file.url}
                         alt={file.filename}
@@ -112,17 +111,19 @@ const MainBody = () => {
                   {/* Action Buttons */}
                   <div className="flex space-x-3 mt-auto">
                     <a
-                      href={file.url}
-                      target='blank'
-                      download={file.filename}
+                      href={`https://previoq-backend.onrender.com/api/download/${file._id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex-1 px-3 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition text-center"
                     >
                       ⬇ Download
                     </a>
                     <a
-                      href={extension === "PDF"
-                        ? `https://previoq-backend.onrender.com/api/files/${file._id}`
-                        : file.url}
+                      href={
+                        file.filename.toUpperCase().endsWith("PDF")
+                          ? `https://previoq-backend.onrender.com/api/files/${file._id}`
+                          : file.url
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition text-center"

@@ -14,7 +14,6 @@ const downloadFile = async (req, res) => {
       responseType: 'stream',
     });
 
-    // 👉 Your snippet goes here
     let filename = file.filename;
     const mimeType = mime.lookup(file.url) || 'application/octet-stream';
     const ext = mime.extension(mimeType);
