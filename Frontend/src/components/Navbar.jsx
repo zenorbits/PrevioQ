@@ -1,8 +1,17 @@
-import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { inputSearch } from '../redux/features/searchFilter';
 
 const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const searchValue = useSelector((state) => state.searchFilter.input); // Redux state
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(searchValue);
+  }, [searchValue]);
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/10 backdrop-blur-md border-b border-white/20 z-50">
@@ -18,6 +27,8 @@ const Navbar = () => {
           <div className="hidden md:flex flex-1 mx-6">
             <input
               type="text"
+              value={searchValue} // ✅ controlled by Redux state
+              onChange={(e) => dispatch(inputSearch(e.target.value))} // ✅ updates Redux state
               placeholder="Search resources, PYQs..."
               className="w-full px-4 py-2 rounded-lg bg-white/20 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
@@ -25,13 +36,8 @@ const Navbar = () => {
 
           {/* Desktop Options */}
           <div className="hidden md:flex items-center space-x-4">
-            {/* Hidden file input */}
-
-            {/* Upload button triggers file input */}
             <Link to='/upload'>
-              <button
-                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow hover:scale-105 transform transition"
-              >
+              <button className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow hover:scale-105 transform transition">
                 Upload Resources
               </button>
             </Link>
@@ -55,6 +61,8 @@ const Navbar = () => {
       <div className="md:hidden px-4 pb-2">
         <input
           type="text"
+          value={searchValue} // ✅ controlled by Redux state
+          onChange={(e) => dispatch(inputSearch(e.target.value))} // ✅ updates Redux state
           placeholder="Search resources..."
           className="w-full px-4 py-2 rounded-lg bg-white/20 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -63,11 +71,8 @@ const Navbar = () => {
       {/* Mobile Menu Options */}
       {menuOpen && (
         <div className="md:hidden px-4 pb-4 space-y-2">
-          {/* Upload button also triggers file input */}
           <Link to='/upload'>
-            <button
-              className="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow hover:scale-105 transform transition"
-            >
+            <button className="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow hover:scale-105 transform transition">
               Upload Resources
             </button>
           </Link>
@@ -76,7 +81,7 @@ const Navbar = () => {
         </div>
       )}
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

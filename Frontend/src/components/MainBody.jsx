@@ -1,14 +1,29 @@
 import React, { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { useFetchFileQuery } from '../redux/api/fileApi';
-
+import { useDispatch, useSelector } from 'react-redux';
 const MainBody = () => {
   const { data, isLoading, isError, refetch } = useFetchFileQuery({ page: 1, limit: 20 });
   const files = data?.files || [];
 
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
+  const selector = useSelector((state) => state.searchFilter.input);
+
+  const filteredFiles = files.filter((file) => {
+    const search = selector.trim().toLowerCase();
+    if (!search) return true; // show all files if search is empty
+
+    const matchesFilename = file.filename?.toLowerCase().includes(search);
+
+    const matchesTags = (file.tags || []).some((tag) =>
+      tag.toLowerCase().includes(search)
+    );
+
+    const matchUploaderName = file.uploader?.toLowerCase().includes(search)
+
+
+    return matchesFilename || matchesTags || matchUploaderName;
+  });
+
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 font-mono overflow-hidden pt-10 lg:pt-4 pb-16">
@@ -66,7 +81,7 @@ const MainBody = () => {
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {files.map((file) => (
+            {filteredFiles.map((file) => (
               <div
                 key={file._id}
                 className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 flex flex-col justify-between shadow-lg"
