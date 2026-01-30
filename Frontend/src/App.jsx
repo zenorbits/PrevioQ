@@ -1,22 +1,42 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import LandingPage from './components/LandingPage'
-import Userpage from './userpage/userpage'
-import UploadForm from './components/UploadForm'
-import About from './userpage/About'
+import React, { useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
+import Userpage from './userpage/userpage';
+import UploadForm from './components/UploadForm';
+import About from './userpage/About';
+import Lenis from '@studio-freight/lenis';
 
 const App = () => {
-  return (
-    <div className='font-mono'>
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 0.3,   // scroll speed
+      smooth: true,    // enable smooth scrolling
+      easing: (t) => t, // easing function
+    });
 
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // optional cleanup
+    return () => {
+      // lenis.destroy(); // if you want to stop it on unmount
+    };
+  }, []);
+
+  return (
+    <div className="font-mono">
       <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/user' element={<Userpage />} />
-        <Route path='/upload' element={<UploadForm />} />
-        <Route path='/about' element={<About />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/user" element={<Userpage />} />
+        <Route path="/upload" element={<UploadForm />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
