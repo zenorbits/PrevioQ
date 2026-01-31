@@ -109,7 +109,7 @@ const MainBody = () => {
                       className="rounded-lg max-h-48 object-contain mx-auto"
                     />
                   ) : (
-                    <p className="text-gray-400 text-sm">Preview not available</p>
+                    <p className="text-gray-400 text-sm">Preview </p>
                   )}
                 </div>
 
