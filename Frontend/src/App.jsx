@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
-import Userpage from './userpage/userpage';
 import UploadForm from './components/UploadForm';
 import About from './userpage/About';
 import Lenis from '@studio-freight/lenis';
+import Userpage from './userpage/Userpage';
+import CommunityPage from './userpage/CommunityPage';
 
 const App = () => {
   useEffect(() => {
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/user" element={<Userpage />} />
         <Route path="/upload" element={<UploadForm />} />
         <Route path="/about" element={<About />} />
+        <Route path="/community" element={<CommunityPage />} />
       </Routes>
     </div>
   );
