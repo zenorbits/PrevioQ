@@ -4,7 +4,7 @@ import LandingPage from './components/LandingPage';
 import UploadForm from './components/UploadForm';
 import About from './userpage/About';
 import Lenis from '@studio-freight/lenis';
-import Userpage from './userpage/Userpage';
+import Userpage from './userpage/userpage';
 import CommunityPage from './userpage/CommunityPage';
 import Contacts from './userpage/Contacts';
 
