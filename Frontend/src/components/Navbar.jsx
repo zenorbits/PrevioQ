@@ -43,7 +43,7 @@ const Navbar = () => {
             </Link>
             <Link to='/community' className="px-4 py-2 text-gray-200 hover:text-white transition">Community </Link>
             <Link to='/about' className="px-4 py-2 text-gray-200 hover:text-white transition">About</Link>
-            <button className="px-4 py-2 text-gray-200 hover:text-white transition">Contact</button>
+            <Link to='/contacts' className="px-4 py-2 text-gray-200 hover:text-white transition">Contact</Link>
           </div>
 
           {/* Mobile Menu Toggle */}

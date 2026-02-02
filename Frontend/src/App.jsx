@@ -6,6 +6,7 @@ import About from './userpage/About';
 import Lenis from '@studio-freight/lenis';
 import Userpage from './userpage/Userpage';
 import CommunityPage from './userpage/CommunityPage';
+import Contacts from './userpage/Contacts';
 
 const App = () => {
   useEffect(() => {
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/upload" element={<UploadForm />} />
         <Route path="/about" element={<About />} />
         <Route path="/community" element={<CommunityPage />} />
+        <Route path="/contacts" element={<Contacts />} />
       </Routes>
     </div>
   );
